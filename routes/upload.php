@@ -35,6 +35,6 @@ Route::post("listhiddenphoto",[ImageController::class,"listHiddenPhoto"])->middl
 Route::post("listprivatephoto",[ImageController::class,"listPrivatePhoto"])->middleware('UserAuthentication');
 Route::post("listpublicphoto",[ImageController::class,"listPublicPhoto"])->middleware('UserAuthentication');
 Route::post("sharedphoto",[ImageController::class,"sharedPhoto"])->middleware('UserAuthentication');
-Route::post("checkSharedPhoto",[ImageController::class,"checkSharedPhoto"])->middleware('UserAuthentication');
+Route::get("checksharedphoto/{id}",[ImageController::class,"checkSharedPhoto"])->middleware('UserAuthentication');
 
 

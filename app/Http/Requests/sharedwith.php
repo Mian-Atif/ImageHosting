@@ -28,7 +28,7 @@ class sharedwith extends FormRequest
         return [
 
             "email"=>'required|exists:users',
-            "photo_id"=>'required|exists:pictures'
+            "id"=>'required|exists:pictures'
 
         ];
     }

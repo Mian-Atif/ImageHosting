@@ -148,11 +148,11 @@ class ImageController extends Controller
             $token = $request->bearerToken();
             $token = (new JwtAuth)->decodeToken($token);
             $name = $token->data->name;
-            $photo=Picture::find($auth['photo_id']);
-            if($photo['privacy']=='private' && $photo['privacy']=='public')
+            $photo=Picture::find($auth['id']);
+            if(($photo['privacy']=='private') ||($photo['privacy']=='public'))
             {
-                Picture::where('id', $auth['photo_id'])->update(['share_with'=>$auth['email']])->get('photo');
-                $details['link'] = url('upload/checkSharedPhoto');
+                Picture::where('id', $auth['id'])->update(['share_with'=>$auth['email']]);
+                $details['link'] = url('upload/checksharedphoto/' . $auth['id']);
                 $details['user_name'] = $name;
                 $details['email'] = $auth['email'];
                 dispatch(new \App\Jobs\SendEmailSharedPhoto($details));
@@ -165,7 +165,7 @@ class ImageController extends Controller
         }
     }
 
-    public function checkSharedPhoto(Request $request)
+    public function checkSharedPhoto(Request $request,$id)
     {
         try {
             $token = $request->bearerToken();
